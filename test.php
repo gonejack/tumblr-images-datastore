@@ -127,8 +127,8 @@ EOD;
 }
 
 function return_recorded_data($post_record) {
-    $data = $post_record['data'];
-    switch ($post_record['responseType']) {
+    $data = unserialize($post_record['data']);
+    switch (unserialize($post_record['responseType'])) {
         case 'redirect':
             redirect_location($data);
             exit_script();
