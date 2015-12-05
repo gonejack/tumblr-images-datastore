@@ -35,7 +35,7 @@ function main() {
 
             echo 'found!';
 
-            var_dump($post_record['data']);
+            var_dump($post_record->data);
 
             //return_recorded_data($post_record);
             exit_script();
