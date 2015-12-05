@@ -33,11 +33,10 @@ function main() {
 
         if ($post_record) {
 
-            echo 'found!';
+            $record_data = $post_record->getData();
 
-            var_dump($post_record->data);
+            return_recorded_data($record_data);
 
-            //return_recorded_data($post_record);
             exit_script();
 
         } else {
@@ -129,9 +128,9 @@ EOD;
     }
 }
 
-function return_recorded_data($post_record) {
-    $data = $post_record['data'];
-    switch ($post_record['responseType']) {
+function return_recorded_data($record_data) {
+    $data = $record_data['data'];
+    switch ($record_data['responseType']) {
         case 'redirect':
             redirect_location($data);
             exit_script();
