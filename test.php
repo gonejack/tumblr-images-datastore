@@ -128,7 +128,7 @@ EOD;
 
 function return_recorded_data($post_record) {
     $data = unserialize($post_record['data']);
-    switch (unserialize($post_record['responseType'])) {
+    switch ($post_record['responseType']) {
         case 'redirect':
             redirect_location($data);
             exit_script();
@@ -155,7 +155,7 @@ function return_recorded_data($post_record) {
 
 function write_record($record, $response_type, $data) {
     $record['responseType'] = $response_type;
-    $record['data'] = $data;
+    $record['data'] = serialize($data);
 
     write_to_ds($record);
 
@@ -180,20 +180,10 @@ function get_store() {
     return $store;
 }
 
-function serialize_data($data) {
-    foreach ($data as &$value) {
-        $value = serialize($value);
-    }
-
-    return $data;
-}
 
 function write_to_ds($data) {
     $store = get_store();
-    $data = serialize_data($data);
-
     $store->upsert($store->createEntity($data));
-
     return true;
 }
 
