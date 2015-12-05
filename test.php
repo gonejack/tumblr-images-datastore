@@ -59,7 +59,7 @@ function main() {
                 'time' => time()
             );
 
-            $output = ''; $response_type = '';
+            $output = '';
             switch ($post_info['type']) {
                 case 'link':
                     $output = <<< EOD
