@@ -29,8 +29,7 @@ function main() {
 
     } else {
 
-        $store = get_store();
-        $post_record = find_from_ds($store, $query_param);
+        $post_record = find_from_ds($query_param);
 
         if ($post_record) {
 
@@ -114,7 +113,7 @@ EOD;
                         $output    = makeZip($image_pack);
 
                         echoZipFile($output);
-                        write_record($record, 'photoSet', $output);
+                        write_record($record, 'photoSet', implode("\r\n", $urls));
 
                         exit_script();
 
@@ -127,7 +126,7 @@ EOD;
 }
 
 function return_recorded_data($post_record) {
-    $data = unserialize($post_record['data']);
+    $data = $post_record['data'];
     switch ($post_record['responseType']) {
         case 'redirect':
             redirect_location($data);
@@ -142,7 +141,7 @@ function return_recorded_data($post_record) {
             exit_script();
             break;
         case 'photoSet':
-            echoZipFile($data);
+            echoTxtFile($data);
             exit_script();
             break;
         default:
@@ -155,7 +154,7 @@ function return_recorded_data($post_record) {
 
 function write_record($record, $response_type, $data) {
     $record['responseType'] = $response_type;
-    $record['data'] = serialize($data);
+    $record['data'] = $data;
 
     write_to_ds($record);
 
@@ -187,7 +186,8 @@ function write_to_ds($data) {
     return true;
 }
 
-function find_from_ds($store, $query_param) {
+function find_from_ds($query_param) {
+    $store = get_store();
     $hash = "{$query_param['post_domain']}|{$query_param['post_id']}";
     return $store->fetchOne("SELECT * FROM tumblr_pack WHERE isbn = '$hash'");
 }
