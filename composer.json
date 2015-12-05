@@ -1,0 +1,9 @@
+{
+  "require":{
+    "tomwalder/php-gds": "v2.0.1"
+  },
+  "repositories": [
+    {"type": "composer", "url": "http://packagist.phpcomposer.com"},
+    {"packagist": false}
+  ]
+}
