@@ -183,7 +183,6 @@ function get_store() {
     return $store;
 }
 
-
 function write_to_ds($data) {
     $store = get_store();
     $store->upsert($store->createEntity($data));
@@ -193,7 +192,7 @@ function write_to_ds($data) {
 function find_from_ds($query_param) {
     $store = get_store();
     $hash = "{$query_param['post_domain']}|{$query_param['post_id']}";
-    return $store->fetchOne("SELECT * FROM tumblr_pack WHERE isbn = '$hash'");
+    return $store->fetchOne("SELECT * FROM tumblr_pack WHERE hash = '$hash'");
 }
 
 function isImageUrl($url) {
