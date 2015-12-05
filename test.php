@@ -87,8 +87,8 @@ EOD;
                     $tags     = implode(', ', $post_info['tags']);
                     $output   = "[Q&A]\r\n\r\n$question\r\n\r\n$answer\r\n\r\nTags: $tags\r\n";
 
-                    echoTxtFile($output);
-                    write_record($record, 'txt', $output);
+                    echoHtmlFile($output);
+                    write_record($record, 'html', $output);
 
                     exit_script();
                     break;
@@ -209,7 +209,7 @@ function get_query_param($url) {
     } else {
         return false;
     }
-}
+};
 
 function query_tumblr_api($query_param) {
     $api_url = "http://{$query_param['post_domain']}/api/read/json?id={$query_param['post_id']}";
