@@ -112,12 +112,19 @@ EOD;
                         exit_script();
                     } else {
 
-                        $image_pack = fetch_images($urls);
-                        $output    = makeZip($image_pack);
+                        $images_pack = fetch_images($urls);
 
-                        echoZipFile($output);
-                        write_record($record, 'photoSet', implode("\r\n", $urls));
+                        $urls_str = implode("\r\n", $urls);
 
+                        if ($images_pack['count'] === 0) {
+                            $output = "Error: can't load this pictures\r\n$urls\r\n\r\nFrom: {$_GET['url']}";
+                            echoTxtFile($output);
+                        } else {
+                            $output = makeZip($images_pack);
+                            echoZipFile($output);
+                        }
+
+                        write_record($record, 'photoSet', $urls_str);
                         exit_script();
 
                     }
