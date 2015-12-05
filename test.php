@@ -84,7 +84,7 @@ EOD;
                 case 'answer':
                     $question = htmlCharsDecode($post_info['question']);
                     $answer   = htmlCharsDecode($post_info['answer']);
-                    $tags     = implode(', ', $post_info['tags']);
+                    $tags     = implode(', ', isset($post_info['tags']) ? $post_info['tags'] : array());
                     $output   = "[Q&A]\r\n\r\n$question\r\n\r\n$answer\r\n\r\nTags: $tags\r\n";
 
                     echoHtmlFile($output);
