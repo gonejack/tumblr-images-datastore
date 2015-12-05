@@ -9,26 +9,43 @@
 require_once('vendor/autoload.php');
 require_once('config.php');
 
-$tumblr_schema = (new GDS\Schema('tumblrPack'))
-    ->addString('postDomain')
-    ->addString('postId')
-    ->addString('postUrl')
-    ->addString('postType')
-    ->addString('postData')
-    ->addString('time');
+function get_store() {
+    $schema = (new GDS\Schema('tumblr_pack'))
+        ->addString('postDomain')
+        ->addString('postId')
+        ->addString('postUrl')
+        ->addString('postType')
+        ->addString('postData', false)
+        ->addString('time');
+    $store = new GDS\Store($schema);
 
-$tumblr_store = new GDS\Store($tumblr_schema);
+    return $store;
+}
 
-$record_data = array(
+function serialize_data($data) {
+    foreach ($data as &$value) {
+        $value = serialize($value);
+    }
+
+    return $data;
+}
+
+function write_to_ds($data) {
+    $store = get_store();
+    $data = serialize_data($data);
+
+    $store->upsert($store->createEntity($data));
+
+    return true;
+}
+
+$data = array(
     'postDomain'=> 'abc',
     'postId' => rand(20, 100),
     'postUrl' => 'http://tumblr.com',
     'postType' => 'photo',
     'postData' => array('abc','def'),
-    'time' => new DateTime(),
+    'time' => time(),
 );
 
-$tumblr_entity = $tumblr_store->createEntity($record_data);
-
-$tumblr_store->upsert($tumblr_entity);
-
+write_to_ds($data);
