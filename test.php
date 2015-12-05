@@ -33,7 +33,11 @@ function main() {
 
         if ($post_record) {
 
-            return_recorded_data($post_record);
+            echo 'found!';
+
+            var_dump($post_record);
+
+            //return_recorded_data($post_record);
             exit_script();
 
         } else {
