@@ -297,7 +297,7 @@ function redirect_location($redirect_url) {
 function htmlCharsDecode($str) {
     $convertMap = array(0x0, 0x2FFFF, 0, 0xFFFF);
 
-    return mb_decode_numericentity(html_entity_decode($str), $convertMap, 'UTF-8');
+    return mb_decode_numericentity($str, $convertMap, 'UTF-8');
 }
 
 function fetch_images($urls) {
