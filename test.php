@@ -92,6 +92,16 @@ EOD;
 
                     exit_script();
                     break;
+                case 'quote':
+                    $quote_text = $post_info['quote-text'];
+                    $quote_source = $post_info['quote-source'];
+                    $output = "Text: $quote_text<br><br>\r\nSource: $quote_source";
+
+                    echoHtmlFile($output);
+                    write_record($record, 'html', $output);
+
+                    exit_script();
+                    break;
                 case 'video':
                     $url = get_video_url($post_info);
 
